@@ -1,0 +1,19 @@
+trigger:
+  branches:
+    include: [main]
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: "3.12"
+  - script: pip install -e ".[dev]"
+    displayName: Install
+  - script: pytest -v --junitxml=test-results.xml
+    displayName: Test
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFiles: test-results.xml
