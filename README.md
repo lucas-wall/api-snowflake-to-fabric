@@ -13,7 +13,7 @@ flowchart LR
 ```
 
 ## Stack
-`REST APIs` · `Snowflake` · `Microsoft Fabric` (Lakehouse, Notebooks, Data Pipelines) · `PySpark` · `Delta Lake` · `Azure Key Vault` · `pytest` · `GitHub Actions`
+`REST APIs` · `Snowflake` · `Microsoft Fabric` (Lakehouse, Notebooks, Data Pipelines) · `PySpark` · `Delta Lake` · `Azure Key Vault` · `pytest` · `GitHub Actions` · `Azure DevOps`
 
 ## What it handles
 - **Rate limits:** honours `Retry-After` on 429, exponential backoff on 5xx, hard cap on retries
@@ -22,6 +22,7 @@ flowchart LR
 - **Late-arriving data:** re-reads a lookback window, because ad platforms restate recent days
 - **Snowflake incremental:** watermark query with bound parameters (no SQL injection) streamed in batches, not loaded all at once
 - **No silent gaps:** one failing store never blocks the others, but the run still ends red with the failed sources listed
+- **Traceability:** every bronze row carries `_source` and `_ingested_at`, and failed sources keep their watermark so the next run reprocesses them
 - **Secrets:** API token and Snowflake credentials come from Azure Key Vault at runtime
 
 ## Run the tests
